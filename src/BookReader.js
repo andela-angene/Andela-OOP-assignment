@@ -1,16 +1,27 @@
 'use strict';
 
+function MasterBookReader (){
+    this.book       = [];
+    this.favorite   = [];
+}
+//Message to be displayed if the wronge bookId is entered
+MasterBookReader.prototype.unavailable = 'Please enter a valid book Id, use the "list()" function to view a list of books';
+
 function BookReader (username, password, fullName, about){
+    // Call constructor of superclass to initialize superclass-derived members.
+    MasterBookReader.call(this);
+    
     this.username   = (username === undefined) ? 'johndoe' : username;
     //hash password if provided
     this.password   = (password === undefined) ? 'ha54321sh' : 'ha'+password.split('').reverse().join('')+'sh';
     this.fullName   = (fullName === undefined) ? username : fullName;
     this.about      = (about === undefined) ? 'I love books!' : about;
-    this.book       = [];
     this.isLoggedIn = true;
-    this.favorite   = [];
 }
-//Re-usable functions are added to the Class prototype object to avoid using up memory each time an instance of the class is created, this increases efficiency.
+
+//BookReader derives from SuperBookReader
+BookReader.prototype = Object.create(MasterBookReader);
+BookReader.prototype.constructor = BookReader;
 
 //Log the user out
 BookReader.prototype.logout = function logout(){
@@ -22,9 +33,6 @@ BookReader.prototype.login = function login(password){
     password = (password === undefined) ? false : 'ha'+password.split('').reverse().join('')+'sh';
     if (password === this.password) return this.isLoggedIn = true;
 }
-
-//Message to be displayed if the wronge bookId is entered
-BookReader.prototype.unavailable = 'Please enter a valid book Id, use the "list()" function to view a list of books';
 
 //Add a book to the collection
 BookReader.prototype.addBook = function  addBook(book){
