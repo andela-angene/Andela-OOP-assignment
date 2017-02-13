@@ -23,7 +23,7 @@ BookReader.prototype.login = function login(password){
     if (password === this.password) return this.isLoggedIn = true;
 }
 
-//Massage to be displayed if the wronge bookId is entered
+//Message to be displayed if the wronge bookId is entered
 BookReader.prototype.unavailable = 'Please enter a valid book Id, use the "list()" function to view a list of books';
 
 //Add a book to the collection
